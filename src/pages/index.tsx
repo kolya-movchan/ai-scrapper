@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardHeader,
@@ -22,16 +21,16 @@ import { Button } from "@/components/ui/button";
 import { PlusCircle, AlertCircle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
-const ScrapingForm = () => {
-  const [keywords, setKeywords] = useState([]);
-  const [keywordInput, setKeywordInput] = useState("");
-  const [customRole, setCustomRole] = useState("");
-  const [showCustomRole, setShowCustomRole] = useState(false);
-  const [selectedRole, setSelectedRole] = useState("");
-  const [customRoles, setCustomRoles] = useState([]);
-  const [error, setError] = useState("");
+const ScrapingForm: React.FC = () => {
+  const [keywords, setKeywords] = useState<string[]>([]);
+  const [keywordInput, setKeywordInput] = useState<string>("");
+  const [customRole, setCustomRole] = useState<string>("");
+  const [showCustomRole, setShowCustomRole] = useState<boolean>(false);
+  const [selectedRole, setSelectedRole] = useState<string>("");
+  const [customRoles, setCustomRoles] = useState<string[]>([]);
+  const [error, setError] = useState<string>("");
 
-  const predefinedRoles = [
+  const predefinedRoles: string[] = [
     "Account Manager",
     "Agile Coach",
     "Android Developer",
@@ -104,9 +103,9 @@ const ScrapingForm = () => {
   ].sort();
 
   // Combine predefined and custom roles, and sort them
-  const allRoles = [...predefinedRoles, ...customRoles].sort();
+  const allRoles: string[] = [...predefinedRoles, ...customRoles].sort();
 
-  const experienceLevels = [
+  const experienceLevels: string[] = [
     "No experience",
     "Less than 1 year",
     "1 year",
@@ -118,25 +117,25 @@ const ScrapingForm = () => {
     "10+ years",
   ];
 
-  const profileCounts = Array.from({ length: 10 }, (_, i) => (i + 1) * 10);
+  const profileCounts: number[] = Array.from({ length: 10 }, (_, i) => (i + 1) * 10);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     console.log("Form submitted");
   };
 
-  const handleKeywordAdd = (e) => {
+  const handleKeywordAdd = (e: React.KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === "Enter" && keywordInput.trim()) {
       setKeywords([...keywords, keywordInput.trim()]);
       setKeywordInput("");
     }
   };
 
-  const removeKeyword = (indexToRemove) => {
+  const removeKeyword = (indexToRemove: number): void => {
     setKeywords(keywords.filter((_, index) => index !== indexToRemove));
   };
 
-  const handleRoleSelect = (value) => {
+  const handleRoleSelect = (value: string): void => {
     if (value === "custom") {
       setShowCustomRole(true);
       setSelectedRole("");
@@ -146,7 +145,7 @@ const ScrapingForm = () => {
     }
   };
 
-  const handleCustomRoleSubmit = () => {
+  const handleCustomRoleSubmit = (): void => {
     const trimmedRole = customRole.trim();
     if (trimmedRole) {
       if (allRoles.includes(trimmedRole)) {
@@ -161,7 +160,7 @@ const ScrapingForm = () => {
     }
   };
 
-  const handleCustomRoleKeyDown = (e) => {
+  const handleCustomRoleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === "Enter") {
       e.preventDefault();
       handleCustomRoleSubmit();
